@@ -20,11 +20,11 @@ export function getRendererURL(tx: string): Promise<string> {
     .then(data => {
       const renderWith = data.data.transaction.tags.find(t => t.name === 'Render-With')?.value
       if (renderWith && renderWith.length === 43) {
-        return `https://arweave.net/${renderWith}/?tx=${tx}`
+        return `https://arweave.dev/${renderWith}/?tx=${tx}`
       } else if (renderWith) {
         return `https://${renderWith}.${host}/?tx=${tx}`
       } else {
-        return `https://arweave.net/${tx}`
+        return `https://arweave.dev/${tx}`
       }
     })
     .then()
