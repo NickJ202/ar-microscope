@@ -120,8 +120,6 @@ export default function Microscope() {
 		}
 	}
 
-	console.log(data);
-
 	return (
 		<>
 			<S.HeaderWrapper>
