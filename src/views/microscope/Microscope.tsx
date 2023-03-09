@@ -1,12 +1,11 @@
 import React from 'react';
+import { elements } from 'lib/molecule'
 
 import { formatAddress } from 'arcframework';
 
 import { Button } from 'components/Button';
 import { Search } from 'components/Search';
 import { ASSETS } from 'helpers/config';
-
-import { elements } from 'lib/molecule'
 
 import * as S from './styles';
 
@@ -50,45 +49,7 @@ export default function Microscope() {
 		(async function () {
 			if (searchTerm || searchRequested) {
 				setLoading(true);
-				// await elements('qyAI9xZfI6gbp4UixqtSMWiIY3F0L2QB-yniVTExESY')
-				await setData([
-					{ id: '-aSGk_rcr9Pa0UkIe-HfWMdEq7OaZnUV6KPXJFBAIIs', parent: null, renderWith: 'alex-renderers' },
-					{
-						id: '4Fzwj8x-c-gk6ZabmHtfluPuMOlmH8fhWzpS9XVGR7s',
-						parent: '-aSGk_rcr9Pa0UkIe-HfWMdEq7OaZnUV6KPXJFBAIIs',
-						renderWith: 'alex-renderers',
-					},
-					{
-						id: 'pGF_4CHDkymYmEaz_CqYvQ7BppKpPNeINc-9KJtB-hk',
-						parent: '-aSGk_rcr9Pa0UkIe-HfWMdEq7OaZnUV6KPXJFBAIIs',
-						renderWith: 'alex-renderers',
-					},
-					{
-						id: '2gqBfu0TH5JVv0UVdOOghRpM7dttCvOl9Oh-3MmHvyo',
-						parent: '4Fzwj8x-c-gk6ZabmHtfluPuMOlmH8fhWzpS9XVGR7s',
-						renderWith: 'alex-renderers',
-					},
-					{
-						id: 'VrCe4YWRurLEm7NZ7-dy4W9TDLPpDifKf6RgDHSjvOE',
-						parent: '4Fzwj8x-c-gk6ZabmHtfluPuMOlmH8fhWzpS9XVGR7s',
-						renderWith: 'alex-renderers',
-					},
-					{
-						id: '_vL66BTmajIB1KNLhdsBRo5Ry2tlqs27YG2Z8tjGTws',
-						parent: 'pGF_4CHDkymYmEaz_CqYvQ7BppKpPNeINc-9KJtB-hk',
-						renderWith: 'alex-renderers',
-					},
-					{
-						id: 'KUumdF1j_-BYGaLNfWZNupE-bXhoGZhL0ckmIqcaFfM',
-						parent: 'pGF_4CHDkymYmEaz_CqYvQ7BppKpPNeINc-9KJtB-hk',
-						renderWith: 'alex-renderers',
-					},
-					{
-						id: '3PRTFt7m8giKZlXlcasIkJHvHBMqjYA2mWHhfsxrIvs',
-						parent: 'KUumdF1j_-BYGaLNfWZNupE-bXhoGZhL0ckmIqcaFfM',
-						renderWith: 'alex-renderers',
-					},
-				]);
+				setData(await elements(searchTerm));
 				setLoading(false);
 			}
 		})();
@@ -158,6 +119,8 @@ export default function Microscope() {
 			)
 		}
 	}
+
+	console.log(data);
 
 	return (
 		<>
