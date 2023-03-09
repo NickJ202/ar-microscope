@@ -4,6 +4,7 @@ import { STYLING } from 'helpers/styling';
 
 export const Wrapper = styled.div`
 	display: flex;
+	display: flex;
 `;
 
 export const SearchWrapper = styled.div`
