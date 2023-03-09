@@ -119,6 +119,6 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 	},
 	devServer: {
-		disableHostCheck: true
+		allowedHosts: ['.gitpod.io']
 	}
 };
