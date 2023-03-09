@@ -109,6 +109,7 @@ export default function Microscope() {
 	function handleClear() {
 		setSearchTerm('');
 		setData(null);
+		setActiveNode(null);
 	}
 
 	function handleCallback(node: any) {
@@ -125,7 +126,7 @@ export default function Microscope() {
 				/>
 			);
 		} else {
-			return <p>Search Tx ID</p>;
+			return null;
 		}
 	}
 
@@ -133,9 +134,27 @@ export default function Microscope() {
 		if (activeNode) {
 			return <S.Frame src={`https://${activeNode.renderWith}.arweave.dev/?tx=${activeNode.id}`} />;
 		} else {
-			return <p>Frame</p>;
+			return null;
 		}
 	}
+
+	function getData() {
+		if (data && activeNode) {
+			return (
+				<>
+				<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
+						<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
+				</>
+			)
+		}
+		else {
+			return (
+				<S.EmptyContainer>
+					<p>Search Tx ID</p>
+				</S.EmptyContainer>
+			)
+		}
+	} 
 
 	return (
 		<>
@@ -161,8 +180,7 @@ export default function Microscope() {
 			<S.Wrapper>
 				<S.Container>
 					<S.Content>
-						<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
-						<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
+						{getData()}
 					</S.Content>
 				</S.Container>
 			</S.Wrapper>

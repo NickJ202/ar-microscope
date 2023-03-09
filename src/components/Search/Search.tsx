@@ -21,7 +21,7 @@ export default function Search(props: IProps) {
 				</S.SearchIcon>
 				<S.SearchInput
 					type={'text'}
-					placeholder={'Search Tx ID'}
+					placeholder={''}
 					value={props.value}
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.handleChange(e.target.value)}
 					onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => props.handleSearch(e)}
