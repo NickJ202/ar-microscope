@@ -34,8 +34,8 @@ export const SearchInput = styled.input`
 	font-size: 14px;
 	font-weight: ${(props) => props.theme.typography.weight.bold};
 	border: 1px solid ${(props) => props.theme.colors.form.border};
-	border-radius: ${STYLING.dimensions.borderRadiusWrapper};
-	padding: 10px 15px 10px 40px;
+	border-radius: 36px;
+	padding: 10px 35px 10px 40px;
 	&:focus {
 		outline: 0;
 		border: 1px solid ${(props) => props.theme.colors.form.valid.outline};
