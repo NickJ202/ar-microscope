@@ -1,4 +1,4 @@
-import { always, compose, concat, equals, identity,ifElse, join, map, path, pluck, split, takeLast, uniqBy } from 'ramda'
+import { always, compose, concat, equals, identity, ifElse, join, map, path, pluck, split, takeLast, uniqBy } from 'ramda'
 
 const url = 'https://arweave.net/graphql'
 const host = getHost(window.location.hostname);
@@ -61,7 +61,8 @@ export function elements(tx: string): Promise<{ id: string, parent: string }[]> 
       })
         .then(res => res.json())
         .then(compose(pluck('node'), path(['data', 'transactions', 'edges'])))
-        .then(uniqBy(path(['owner', 'address'])))
+        .then(x => (console.log('nodes', x.length), x))
+        //.then(uniqBy(path(['owner', 'address'])))
         .then(nodes => {
           const ns = map(n => ({ data: { id: n.id, group: 'nodes' } }), nodes)
           const edges = map(e => ({ data: { id: `e${e.id}`, source: tx, target: e.id, group: 'edges' } }), nodes)
@@ -70,6 +71,7 @@ export function elements(tx: string): Promise<{ id: string, parent: string }[]> 
             concat(ns)
           )(edges)
         })
+        .then(x => (console.log('nodes', x.length), x))
     )
 
 }
@@ -100,7 +102,7 @@ function rootQuery() {
 
 function nodeQuery() {
   return `query Nodes($sources:[String!]!) {
-transactions(first:100, tags:{name:"Data-Source", values:$sources}) {
+transactions(first: 100, tags:{name:"Data-Source", values:$sources}) {
   edges {
     node {
       id 

@@ -85,7 +85,7 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 		{
 			selector: `node[id="${props.activeId}"]`,
 			style: {
-				'background-color': '#72F052',
+				'background-color': '#ff8500',
 			},
 		},
 	];
@@ -103,7 +103,7 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 			const target = event.target;
 			props.handleCallback(target['_private'].data);
 		});
-		
+
 		return () => {
 			cy.destroy();
 		};
