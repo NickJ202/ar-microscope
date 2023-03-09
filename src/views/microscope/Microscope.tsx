@@ -6,6 +6,8 @@ import { Button } from 'components/Button';
 import { Search } from 'components/Search';
 import { ASSETS } from 'helpers/config';
 
+import { elements } from 'lib/molecule'
+
 import * as S from './styles';
 
 function renderTree(data: any, parent: any, handleCallback: (node: any) => void, activeId: string | null) {
@@ -48,6 +50,7 @@ export default function Microscope() {
 		(async function () {
 			if (searchTerm || searchRequested) {
 				setLoading(true);
+				// await elements('qyAI9xZfI6gbp4UixqtSMWiIY3F0L2QB-yniVTExESY')
 				await setData([
 					{ id: '-aSGk_rcr9Pa0UkIe-HfWMdEq7OaZnUV6KPXJFBAIIs', parent: null, renderWith: 'alex-renderers' },
 					{
@@ -142,8 +145,8 @@ export default function Microscope() {
 		if (data && activeNode) {
 			return (
 				<>
-				<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
-						<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
+					<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
+					<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
 				</>
 			)
 		}
@@ -154,7 +157,7 @@ export default function Microscope() {
 				</S.EmptyContainer>
 			)
 		}
-	} 
+	}
 
 	return (
 		<>
