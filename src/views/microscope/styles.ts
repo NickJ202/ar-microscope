@@ -99,6 +99,9 @@ export const TreeDiagram = styled.div`
 	justify-content: center;
 	align-items: center;
 	animation: ${open} ${fadeIn2};
+	background: ${(props) => props.theme.colors.container.alt3.background};
+	border: 1px solid ${(props) => props.theme.colors.border.primary};
+	border-radius: ${STYLING.dimensions.borderRadiusWrapper};
 `;
 
 export const NodeContainer = styled.div``;

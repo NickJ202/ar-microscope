@@ -1,4 +1,4 @@
-import { compose, concat, map, path, pluck, uniqBy, takeLast, ifElse, equals, always, join, split, identity } from 'ramda'
+import { always, compose, concat, equals, identity,ifElse, join, map, path, pluck, split, takeLast, uniqBy } from 'ramda'
 
 const url = 'https://arweave.net/graphql'
 const host = getHost(window.location.hostname);
@@ -16,9 +16,9 @@ export function getRendererURL(tx: string): Promise<string> {
       }
     })
   })
-    .then(res => res.data)
+    .then((res: any) => res.json())
     .then(data => {
-      const renderWith = data.transaction.tags.find(t => t.name === 'Render-With')?.value
+      const renderWith = data.data.transaction.tags.find(t => t.name === 'Render-With')?.value
       if (renderWith && renderWith.length === 43) {
         return `https://arweave.net/${renderWith}/?tx=${tx}`
       } else if (renderWith) {
@@ -27,7 +27,7 @@ export function getRendererURL(tx: string): Promise<string> {
         return `https://arweave.net/${tx}`
       }
     })
-    .then(x => (console.log(x), x))
+    .then()
 }
 
 export function elements(tx: string): Promise<{ id: string, parent: string }[]> {

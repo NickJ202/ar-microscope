@@ -1,7 +1,7 @@
 import React from 'react';
 import cytoscape from 'cytoscape';
 import klay from 'cytoscape-klay';
-import { elements } from 'lib/molecule';
+import { elements, getRendererURL } from 'lib/molecule';
 
 cytoscape.use(klay);
 
@@ -74,7 +74,6 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 			style: {
 				'label': 'data(label)',
 				'background-color': '#3A3A3A',
-				// 'background-image': `url(${ASSETS.texture})`,
 				'text-valign': 'center',
 				'text-halign': 'center',
 				'width': '50px',
@@ -124,7 +123,7 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 }
 
 export default function Microscope() {
-	const [searchTerm, setSearchTerm] = React.useState<string>('-I4tx4DjyBD93vTSbbK2S5pnh1vP0V8SYGOHiJ4R4ag');
+	const [searchTerm, setSearchTerm] = React.useState<string>('');
 	const [loading, setLoading] = React.useState<boolean>(false);
 
 	const [searchRequested, setSearchRequested] = React.useState<boolean>(false);
@@ -132,6 +131,7 @@ export default function Microscope() {
 
 	const [data, setData] = React.useState<any>(null);
 	const [activeNode, setActiveNode] = React.useState<any>(null);
+	const [rendererURL, setRendererURL] = React.useState<any>(null);
 
 	React.useEffect(() => {
 		(async function () {
@@ -149,6 +149,14 @@ export default function Microscope() {
 			setActiveNode(data[0].data);
 		}
 	}, [data]);
+
+	React.useEffect(() => {
+		(async function () {
+			if (activeNode) {
+				setRendererURL(await getRendererURL(activeNode.id));
+			}
+		})();
+	}, [activeNode]);
 
 	function handleSearch(e: any) {
 		if ((e.type === 'keydown' && e.key === 'Enter') || e.type === 'click') {
@@ -185,7 +193,7 @@ export default function Microscope() {
 
 	function getFrame() {
 		if (activeNode) {
-			return <S.Frame src={`https://${activeNode.renderWith}.arweave.dev/?tx=${activeNode.id}`} />;
+			return <S.Frame src={rendererURL} />;
 		} else {
 			return null;
 		}
@@ -207,6 +215,8 @@ export default function Microscope() {
 			);
 		}
 	}
+
+	console.log(data)
 
 	return (
 		<>
