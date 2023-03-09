@@ -92,13 +92,16 @@ export const ContentWrapper = styled.div`
 `;
 
 export const TreeDiagram = styled.div`
-	padding: 20px 0 0 0;
+	height: 100%;
+	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	animation: ${open} ${fadeIn2};
 `;
 
-export const NodeContainer = styled.div`
-	margin: 0 0 20px 50px;
-`;
+export const NodeContainer = styled.div``;
 
 export const Node = styled.div`
 	margin: 0 0 10px 0;

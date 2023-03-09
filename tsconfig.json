@@ -20,7 +20,8 @@
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 		"noEmit": true,
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"types": ["react-cytoscapejs"]
 	},
 	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["./tests", "./dist", "src/**/*.test.ts", "src/**/*.test.tsx"]

@@ -1,42 +1,130 @@
 import React from 'react';
-import { elements } from 'lib/molecule'
+import cytoscape from 'cytoscape';
+import klay from 'cytoscape-klay';
+import { elements } from 'lib/molecule';
 
-import { formatAddress } from 'arcframework';
+cytoscape.use(klay);
 
-import { Button } from 'components/Button';
 import { Search } from 'components/Search';
 import { ASSETS } from 'helpers/config';
 
 import * as S from './styles';
 
-function renderTree(data: any, parent: any, handleCallback: (node: any) => void, activeId: string | null) {
+const layouts: Record<string, any> = {
+	random: {
+		name: 'random',
+		animate: true,
+	},
+	grid: {
+		name: 'grid',
+		animate: true,
+	},
+	circle: {
+		name: 'circle',
+		animate: true,
+	},
+	breadthfirst: {
+		name: 'breadthfirst',
+		animate: true,
+	},
+	klay: {
+		name: 'klay',
+		animate: true,
+		padding: 4,
+		nodeDimensionsIncludeLabels: true,
+		klay: {
+			spacing: 40,
+			mergeEdges: false,
+		},
+	},
+	fcose: {
+		name: 'fcose',
+		animate: true,
+	},
+	cose: {
+		name: 'cose',
+		animate: true,
+	},
+
+	cola: {
+		name: 'cola',
+		animate: true,
+		maxSimulationTime: 40000,
+	},
+	dagre: {
+		name: 'dagre',
+		animate: true,
+	},
+};
+
+['box', 'disco', 'force', 'layered', 'mrtree', 'random', 'stress'].forEach((elkAlgo) => {
+	layouts[`elk_${elkAlgo}`] = {
+		name: 'elk',
+		animate: true,
+		elk: {
+			algorithm: elkAlgo,
+		},
+	};
+});
+
+function Tree(props: { data: any; handleCallback: (node: any) => void; activeId: string | null }) {
+	const styles: any = [
+		{
+			selector: 'node',
+			style: {
+				'label': 'data(label)',
+				'background-color': '#3A3A3A',
+				// 'background-image': `url(${ASSETS.texture})`,
+				'text-valign': 'center',
+				'text-halign': 'center',
+				'width': '50px',
+				'height': '50px',
+				'border-radius': '50%',
+				'cursor': 'pointer !important'
+			}
+		},
+		{
+			selector: `node[id="${props.activeId}"]`,
+			style: {
+				'background-color': '#72F052',
+			},
+		},
+	];
+
+	const cyRef = React.useRef<any>();
+
+	React.useEffect(() => {
+		const cy = cytoscape({
+			container: cyRef.current,
+			elements: props.data,
+			style: styles,
+		});
+
+		cy.on('click', 'node', function (event) {
+			const target = event.target;
+			props.handleCallback(target['_private'].data);
+		});
+		
+		return () => {
+			cy.destroy();
+		};
+	}, [props.activeId]);
+
 	return (
-		<>
-			{data
-				.filter((node: any) => node.parent === parent)
-				.map((node: any) => (
-					<S.NodeContainer key={node.id}>
-						<S.Node>
-							<Button
-								type={'alt2'}
-								label={formatAddress(node.id, false)}
-								handlePress={() => handleCallback(node)}
-								active={activeId ? node.id === activeId : false}
-							/>
-						</S.Node>
-						{renderTree(data, node.id, handleCallback, activeId)}
-					</S.NodeContainer>
-				))}
-		</>
+		<S.TreeDiagram>
+			<div
+				ref={cyRef}
+				style={{
+					width: '35%',
+					height: '35%',
+				}}
+			/>
+		</S.TreeDiagram>
 	);
 }
 
-function Tree(props: { data: any; handleCallback: (node: any) => void; activeId: string | null }) {
-	return <S.TreeDiagram>{renderTree(props.data, null, props.handleCallback, props.activeId)}</S.TreeDiagram>;
-}
-
 export default function Microscope() {
-	const [searchTerm, setSearchTerm] = React.useState<string>('');
+	const [searchTerm, setSearchTerm] = React.useState<string>('-I4tx4DjyBD93vTSbbK2S5pnh1vP0V8SYGOHiJ4R4ag');
 	const [loading, setLoading] = React.useState<boolean>(false);
 
 	const [searchRequested, setSearchRequested] = React.useState<boolean>(false);
@@ -49,7 +137,8 @@ export default function Microscope() {
 		(async function () {
 			if (searchTerm || searchRequested) {
 				setLoading(true);
-				setData(await elements(searchTerm));
+				const result = await elements(searchTerm);
+				setData(result);
 				setLoading(false);
 			}
 		})();
@@ -57,7 +146,7 @@ export default function Microscope() {
 
 	React.useEffect(() => {
 		if (data && data.length) {
-			setActiveNode(data[0]);
+			setActiveNode(data[0].data);
 		}
 	}, [data]);
 
@@ -109,14 +198,13 @@ export default function Microscope() {
 					<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
 					<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
 				</>
-			)
-		}
-		else {
+			);
+		} else {
 			return (
 				<S.EmptyContainer>
 					<p>Search Tx ID</p>
 				</S.EmptyContainer>
-			)
+			);
 		}
 	}
 
@@ -143,9 +231,7 @@ export default function Microscope() {
 			</S.HeaderWrapper>
 			<S.Wrapper>
 				<S.Container>
-					<S.Content>
-						{getData()}
-					</S.Content>
+					<S.Content>{getData()}</S.Content>
 				</S.Container>
 			</S.Wrapper>
 		</>
