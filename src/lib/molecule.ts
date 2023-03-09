@@ -1,6 +1,34 @@
-import { compose, concat, map, path, pluck, uniqBy } from 'ramda'
+import { compose, concat, map, path, pluck, uniqBy, takeLast, ifElse, equals, always, join, split, identity } from 'ramda'
 
 const url = 'https://arweave.net/graphql'
+const host = getHost(window.location.hostname);
+
+export function getRendererURL(tx: string): Promise<string> {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: rendererQuery(),
+      variables: {
+        id: tx
+      }
+    })
+  })
+    .then(res => res.data)
+    .then(data => {
+      const renderWith = data.transaction.tags.find(t => t.name === 'Render-With')?.value
+      if (renderWith && renderWith.length === 43) {
+        return `https://arweave.net/${renderWith}/?tx=${tx}`
+      } else if (renderWith) {
+        return `https://${renderWith}.${host}/?tx=${tx}`
+      } else {
+        return `https://arweave.net/${tx}`
+      }
+    })
+    .then(x => (console.log(x), x))
+}
 
 export function elements(tx: string): Promise<{ id: string, parent: string }[]> {
   return fetch(url, {
@@ -46,6 +74,16 @@ export function elements(tx: string): Promise<{ id: string, parent: string }[]> 
 
 }
 
+function getHost(hostname) {
+  return compose(
+    ifElse(equals("gitpod.io"), always("arweave.dev"), identity),
+    ifElse(equals("localhost"), always("arweave.dev"), identity),
+    join("."),
+    takeLast(2),
+    split(".")
+  )(hostname);
+}
+
 function rootQuery() {
   return `query Root($tx : ID!) {
     transaction(id: $tx) {
@@ -75,4 +113,17 @@ transactions(first:100, tags:{name:"Data-Source", values:$sources}) {
   }
 }}`
 
+}
+
+function rendererQuery() {
+  return `query($id: ID!) {
+transaction(id: $id) {
+  id
+  owner {address}
+  tags {
+    name
+    value
+  }
+}    
+  }`
 }
