@@ -6,3 +6,4 @@
 **/.DS_Store
 **/wallets
 wallet.json
+dist-manifest.csv
