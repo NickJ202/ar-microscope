@@ -20,7 +20,6 @@ const components: ObjectKeys = {
 };
 
 export default function App(props: any) {
-	console.log('APP PROPS', props);
 	const Component = components[props.page || 'LazyHome'];
 	return (
 		<>
