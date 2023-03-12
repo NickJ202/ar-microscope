@@ -1,13 +1,41 @@
-import { DOM } from 'helpers/config';
-import { Microscope } from 'views/microscope';
+import { connect } from 'react-redux';
+import loadable from '@loadable/component';
 
-export default function App() {
+import { DOM } from 'helpers/config';
+
+const LazyHome = loadable(() => import('views/microscope'), {
+	resolveComponent: (components) => components.ConnectedMicroscope,
+});
+const LazyTx = loadable(() => import('views/tx'), {
+	resolveComponent: (components) => components.ConnectedTx,
+});
+
+interface ObjectKeys {
+	[key: string]: any;
+}
+
+const components: ObjectKeys = {
+	LazyHome,
+	LazyTx,
+};
+
+export default function App(props: any) {
+	console.log('APP PROPS', props);
+	const Component = components[props.page || 'LazyHome'];
 	return (
 		<>
 			<div id={DOM.loader} />
 			<div id={DOM.modal} />
 			<div id={DOM.notification} />
-			<Microscope />
+			<Component />
 		</>
 	);
 }
+
+const mapStateToProps = (state: any, props: any) => {
+	return {
+		...props,
+		page: state.page,
+	};
+};
+export const ConnectedApp = connect(mapStateToProps)(App);

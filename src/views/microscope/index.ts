@@ -1,1 +1,1 @@
-export { default as Microscope } from './Microscope';
+export { ConnectedMicroscope, default as Microscope } from './Microscope';
