@@ -224,7 +224,13 @@ export default function Tx(props: any) {
 		</>
 	);
 }
-
-export const ConnectedTx = connect(null, (dispatch) => ({
+const mapStateToProps = (state: any, props: any) => {
+	return {
+		...props,
+		page: state.page,
+		tx: state?.location?.params?.tx,
+	};
+};
+export const ConnectedTx = connect(mapStateToProps, (dispatch) => ({
 	goToMicroscope: () => dispatch({ type: 'HOME' }),
 }))(Tx);
