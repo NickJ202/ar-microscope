@@ -124,7 +124,7 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 }
 
 // TODO: update icon -> M
-export default function Microscope(props: any) {
+export default function Tx(props: any) {
 	const [searchTerm, setSearchTerm] = React.useState<string>('');
 	const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -211,48 +211,20 @@ export default function Microscope(props: any) {
 			);
 		} else {
 			return (
-				<>
-					<button onClick={() => props.goToTx('9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4')}>Go to tx</button>
-					<S.EmptyContainer>
-						<p>Search Tx ID</p>
-					</S.EmptyContainer>
-				</>
+				<S.EmptyContainer>
+					<p>Search Tx ID</p>
+				</S.EmptyContainer>
 			);
 		}
 	}
 
-	console.log(data);
-
 	return (
 		<>
-			<S.HeaderWrapper>
-				<S.HeaderContainer>
-					<S.HeaderContent>
-						<S.LogoContainer>
-							<S.Logo src={ASSETS.logo} />
-						</S.LogoContainer>
-						<S.ActionContainer>
-							<Search
-								value={searchTerm}
-								handleChange={(id: string) => setSearchTerm(id)}
-								handleSearch={(e: React.KeyboardEvent<HTMLInputElement>) => handleSearch(e)}
-								handleClear={() => handleClear()}
-								disabled={loading}
-								loading={loading}
-							/>
-						</S.ActionContainer>
-					</S.HeaderContent>
-				</S.HeaderContainer>
-			</S.HeaderWrapper>
-			<S.Wrapper>
-				<S.Container>
-					<S.Content>{getData()}</S.Content>
-				</S.Container>
-			</S.Wrapper>
+			<button onClick={() => props.goToMicroscope()}>Back to microscope</button>
 		</>
 	);
 }
 
-export const ConnectedMicroscope = connect(null, (dispatch) => ({
-	goToTx: (tx: string) => dispatch({ type: 'TX', params: { tx } }),
-}))(Microscope);
+export const ConnectedTx = connect(null, (dispatch) => ({
+	goToMicroscope: () => dispatch({ type: 'HOME' }),
+}))(Tx);
