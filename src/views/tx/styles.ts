@@ -73,7 +73,6 @@ export const Content = styled.div`
 	max-height: 625px;
 	width: 100%;
 	display: flex;
-	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	@media (max-width: ${STYLING.cutoffs.tablet}) {
@@ -92,14 +91,18 @@ export const ContentWrapper = styled.div`
 `;
 
 export const TreeWrapper = styled(ContentWrapper)`
+	width: 40%;
 	background: ${(props) => props.theme.colors.navigation.header.background};
 	border-radius: ${STYLING.dimensions.borderRadius};
+	position: relative;
 `;
 
 export const RendererWrapper = styled(ContentWrapper)`
+	width: 47.5%;
 	background: ${(props) => props.theme.colors.container.primary.background};
 	border: 3.5px solid ${(props) => props.theme.colors.border.alt4};
 	border-radius: ${STYLING.dimensions.borderRadius};
+	overflow: hidden;
 `;
 
 export const TreeDiagram = styled.div`
@@ -110,9 +113,23 @@ export const TreeDiagram = styled.div`
 	justify-content: center;
 	align-items: center;
 	animation: ${open} ${fadeIn2};
-	background: ${(props) => props.theme.colors.container.alt3.background};
 	border: 1px solid ${(props) => props.theme.colors.border.primary};
 	border-radius: ${STYLING.dimensions.borderRadiusWrapper};
+`;
+
+export const SelectedContainer = styled.div`
+	// border: 1px solid ${(props) => props.theme.colors.border.primary};
+	border-radius: ${STYLING.dimensions.borderRadius};
+	background: ${(props) => props.theme.colors.container.alt1.background};
+	padding: 10px 15px;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	p {
+		font-size: ${(props) => props.theme.typography.size.small};
+		font-weight: ${(props) => props.theme.typography.weight.bold};
+		color: ${(props) => props.theme.colors.font.primary.base};
+	}
 `;
 
 export const NodeContainer = styled.div``;
@@ -127,23 +144,20 @@ export const Frame = styled.iframe`
 `;
 
 export const EmptyContainer = styled.div`
-	height: 70px;
-	width: 300px;
-	max-width: 95vw;
-	position: absolute;
-	top: 25%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background: ${(props) => props.theme.colors.container.alt3.background};
-	border: 1px solid ${(props) => props.theme.colors.border.primary};
-	border-radius: ${STYLING.dimensions.borderRadiusWrapper};
+	height: 100%;
+	width:L 100%;
 	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: center;
 	align-items: center;
-	animation: ${open} ${fadeIn2};
 	p {
-		font-size: ${(props) => props.theme.typography.size.xSmall};
+		font-size: ${(props) => props.theme.typography.size.small};
 		font-weight: ${(props) => props.theme.typography.weight.bold};
+		color: ${(props) => props.theme.colors.font.primary.active.base};
+	}
+`;
+
+export const Divider = styled.div`
+	svg {
+		width: 60px;
 	}
 `;

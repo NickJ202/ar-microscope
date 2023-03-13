@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { ReactSVG } from 'react-svg';
 import cytoscape from 'cytoscape';
 import klay from 'cytoscape-klay';
 import { elements, getRendererURL } from 'lib/molecule';
@@ -74,19 +75,18 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 			selector: 'node',
 			style: {
 				label: 'data(label)',
-				'background-color': '#3A3A3A',
+				'background-color': '#D9D9D9',
 				'text-valign': 'center',
 				'text-halign': 'center',
-				width: '50px',
 				height: '50px',
+				width: '50px',
 				'border-radius': '50%',
-				cursor: 'pointer !important',
 			},
 		},
 		{
 			selector: `node[id="${props.activeId}"]`,
 			style: {
-				'background-color': '#ff8500',
+				'background-color': '#FF5F15',
 			},
 		},
 	];
@@ -112,6 +112,9 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 
 	return (
 		<S.TreeDiagram>
+			<S.SelectedContainer>
+				<p>Selected</p>
+			</S.SelectedContainer>
 			<div
 				ref={cyRef}
 				style={{
@@ -124,7 +127,7 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 }
 
 export default function Tx(props: any) {
-	const [searchTerm, setSearchTerm] = React.useState<string>('');
+	const [searchTerm, setSearchTerm] = React.useState<string>('pq8klYW8sYx_t4QnDjm5NTUG4qR8HA3lHoHUrZodOYY');
 	const [loading, setLoading] = React.useState<boolean>(false);
 
 	const [searchRequested, setSearchRequested] = React.useState<boolean>(false);
@@ -188,7 +191,11 @@ export default function Tx(props: any) {
 				/>
 			);
 		} else {
-			return null;
+			return (
+				<S.EmptyContainer>
+					<p>Enter a TXID to focus on ...</p>
+				</S.EmptyContainer>
+			);
 		}
 	}
 
@@ -196,31 +203,13 @@ export default function Tx(props: any) {
 		if (activeNode) {
 			return <S.Frame src={rendererURL} />;
 		} else {
-			return null;
+			return (
+				<S.EmptyContainer>
+					<p>Waiting for selection ...</p>
+				</S.EmptyContainer>
+			);
 		}
 	}
-
-	// function getData() {
-	// 	if (data && activeNode) {
-	// 		return (
-	// 			<>
-	// 				<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
-	// 				<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
-	// 			</>
-	// 		);
-	// 	} else {
-	// 		return (
-	// 			<>
-	// 				<button onClick={() => props.goToTx('9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4')}>Go to tx</button>
-	// 				<S.EmptyContainer>
-	// 					<p>Search Tx ID</p>
-	// 				</S.EmptyContainer>
-	// 			</>
-	// 		);
-	// 	}
-	// }
-
-	console.log(props)
 
 	return (
 		<>
@@ -247,6 +236,9 @@ export default function Tx(props: any) {
 				<S.Container>
 					<S.Content>
 						<S.TreeWrapper>{getTreeData()}</S.TreeWrapper>
+						<S.Divider>
+							<ReactSVG src={ASSETS.divider} />
+						</S.Divider>
 						<S.RendererWrapper>{getFrame()}</S.RendererWrapper>
 					</S.Content>
 				</S.Container>
