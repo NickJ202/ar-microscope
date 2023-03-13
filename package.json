@@ -12,10 +12,12 @@
 		"test:verbose": "npm test -- --verbose",
 		"test:coverage": "CI=true npm test -- --env=jsdom --coverage",
 		"build": "webpack --mode production",
-		"deploy": "npm run build && node perma-deploy.js ./dist"
+		"fund": "bundlr fund 500000000000 -h https://node2.bundlr.network -w ${PATH_TO_WALLET} -c arweave",
+		"balance": "bundlr balance ${WALLET} -h https://node2.bundlr.network -c arweave",
+		"deploy": "npm run build && node perma-deploy.mjs ./dist"
 	},
 	"dependencies": {
-		"@bundlr-network/client": "^0.9.11",
+		"@bundlr-network/client": "0.10.5",
 		"@permaweb/stampjs": "^0.0.11",
 		"@types/cytoscape": "3.14.17",
 		"@types/react-cytoscapejs": "1.2.2",
