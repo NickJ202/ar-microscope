@@ -1,0 +1,1 @@
+export { ConnectedLanding, default as Landing } from './Landing';

@@ -1,8 +1,6 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
 
-import { LANGUAGE } from 'arcframework';
-
 import { ASSETS } from 'helpers/config';
 
 import { Button } from '../Button';
@@ -11,17 +9,16 @@ import { IconButton } from '../IconButton';
 import * as S from './styles';
 import { IProps } from './types';
 
-// TODO: search Fix disabled={props.disabled}
 export default function Search(props: IProps) {
 	return (
 		<S.Wrapper>
 			<S.SearchWrapper>
-				<S.SearchIcon disabled={props.disabled}>
-					<ReactSVG src={ASSETS.search} />
-				</S.SearchIcon>
+			<S.SearchIcon disabled={props.disabled}>
+				<ReactSVG src={ASSETS.search} />
+			</S.SearchIcon>
 				<S.SearchInput
 					type={'text'}
-					placeholder={''}
+					placeholder={'Enter a TXID to focus on ...'}
 					value={props.value}
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.handleChange(e.target.value)}
 					onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => props.handleSearch(e)}
@@ -38,7 +35,7 @@ export default function Search(props: IProps) {
 					/>
 				</S.ClearWrapper>
 			</S.SearchWrapper>
-			<S.SearchButtonWrapper>
+			{/* <S.SearchButtonWrapper>
 				<Button
 					type={'alt1'}
 					label={'Search'}
@@ -46,7 +43,7 @@ export default function Search(props: IProps) {
 					disabled={props.disabled || !props.value}
 					noMinWidth
 				/>
-			</S.SearchButtonWrapper>
+			</S.SearchButtonWrapper> */}
 		</S.Wrapper>
 	);
 }

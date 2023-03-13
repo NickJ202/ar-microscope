@@ -25,6 +25,7 @@ export const HeaderContent = styled.div`
 	width: 100%;
 	display: flex;
 	align-items: center;
+	position: relative;
 `;
 
 export const LogoContainer = styled.div`
@@ -38,13 +39,12 @@ export const Logo = styled.img`
 `;
 
 export const ActionContainer = styled.div`
-	height: 100%;
-	width: fit-content;
+	height: fit-content;
+	width: 600px;
 	display: flex;
 	align-items: center;
 	position: absolute;
-	left: 50%;
-	transform: translate(-50%, 0);
+	right: 0;
 	@media (max-width: ${STYLING.cutoffs.tablet}) {
 		top: 75px;
 	}
@@ -89,6 +89,17 @@ export const ContentWrapper = styled.div`
 		width: 100%;
 		margin: 0 0 40px 0;
 	}
+`;
+
+export const TreeWrapper = styled(ContentWrapper)`
+	background: ${(props) => props.theme.colors.navigation.header.background};
+	border-radius: ${STYLING.dimensions.borderRadius};
+`;
+
+export const RendererWrapper = styled(ContentWrapper)`
+	background: ${(props) => props.theme.colors.container.primary.background};
+	border: 3.5px solid ${(props) => props.theme.colors.border.alt4};
+	border-radius: ${STYLING.dimensions.borderRadius};
 `;
 
 export const TreeDiagram = styled.div`

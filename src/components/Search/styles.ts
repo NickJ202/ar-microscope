@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import { STYLING } from 'helpers/styling';
 
 export const Wrapper = styled.div`
-	display: flex;
+	height: 100%;
+	width: 100%;
 	display: flex;
 `;
 
 export const SearchWrapper = styled.div`
-	height: ${STYLING.dimensions.formHeightMin};
+	height: ${STYLING.dimensions.formHeightSm};
 	width: ${STYLING.dimensions.formWidthMax};
+	width: 100%;
 	max-width: 88.25vw;
 	display: flex;
 	position: relative;
@@ -18,8 +20,8 @@ export const SearchWrapper = styled.div`
 export const SearchIcon = styled.div<{ disabled: boolean | undefined }>`
     svg {
         position: absolute;
-        top: 7.15px;
-        left: 15.5px;
+        top: 5.15px;
+        left: 17.5px;
         width: 15px;
         fill ${(props) => props.theme.colors.icon.primary.alt1.fill};
         &:hover {
@@ -29,9 +31,9 @@ export const SearchIcon = styled.div<{ disabled: boolean | undefined }>`
 `;
 
 export const SearchInput = styled.input`
-	height: ${STYLING.dimensions.formHeightMin};
+	height: ${STYLING.dimensions.formHeightSm};
 	width: 100%;
-	font-size: 14px;
+	font-size: ${(props) => props.theme.typography.size.base};
 	font-weight: ${(props) => props.theme.typography.weight.bold};
 	border: 1px solid ${(props) => props.theme.colors.form.border};
 	border-radius: 36px;
@@ -47,9 +49,6 @@ export const SearchInput = styled.input`
 		color: ${(props) => props.theme.colors.form.disabled.label};
 		box-shadow: none;
 		border: 1px solid ${(props) => props.theme.colors.form.border};
-	}
-	@media (max-width: ${STYLING.cutoffs.tablet}) {
-		font-size: ${(props) => props.theme.typography.size.base};
 	}
 `;
 

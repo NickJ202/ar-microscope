@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 const DEFAULT = {
 	neutral1: '#FFFFFF',
-	neutral2: '#F2F3F4',
+	neutral2: '#F1F1F1',
 	neutral3: '#E0E0E0',
 	neutral4: '#3A3A3A',
 	neutral5: '#D0D7DE',
@@ -11,18 +11,18 @@ const DEFAULT = {
 	neutral8: '#ACACAC',
 	neutral9: '#F6F8FA',
 	neutral10: '#BABABA',
-	neutral11: '#161616',
+	neutral11: '#202020',
 	neutral12: '#FAFAFA',
 	neutral13: '#F7F7F7',
 	neutral14: '#FFFFFF',
 	neutral15: '#536471',
 	neutral16: '#F0F9FE',
-	primary: '#964AA0',
-	primary2: '#A757B2',
-	primary3: '#AF65B8',
-	primary4: '#B673BF',
-	alt1: '#72F052',
-	alt2: '#84F269',
+	primary: '#FF5F15',
+	primary2: '#FF7433',
+	primary3: '#FF8247',
+	primary4: '#FF8F5C',
+	alt1: '#FF5F15',
+	alt2: '#FF7433',
 	overlay1: 'rgba(255, 255, 255, 0.75)',
 	contrast: '#EE3C3C',
 	contrastShadow: '#F27979',
@@ -42,6 +42,7 @@ export const defaultTheme: DefaultTheme = {
 			alt1: DEFAULT.primary3,
 			alt2: DEFAULT.primary4,
 			alt3: DEFAULT.neutral6,
+			alt4: DEFAULT.primary
 		},
 		button: {
 			primary: {
@@ -144,7 +145,7 @@ export const defaultTheme: DefaultTheme = {
 		},
 		form: {
 			background: DEFAULT.neutral1,
-			border: DEFAULT.neutral6,
+			border: DEFAULT.neutral11,
 			invalid: {
 				outline: DEFAULT.contrast,
 				shadow: DEFAULT.contrastShadow,
@@ -235,14 +236,14 @@ export const defaultTheme: DefaultTheme = {
 		},
 		transparent: DEFAULT.transparent,
 		view: {
-			background: DEFAULT.neutral1,
+			background: DEFAULT.neutral2,
 		},
 		warning: DEFAULT.contrast,
 	},
 	typography: {
 		family: {
-			primary: `'Lato', sans-serif`,
-			alt1: `'Lato', sans-serif`,
+			primary: `'Roboto Mono', monospace`,
+			alt1: `'Roboto Mono', monospace`,
 		},
 		size: {
 			h1: '48px',

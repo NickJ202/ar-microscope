@@ -3,8 +3,8 @@ import loadable from '@loadable/component';
 
 import { DOM } from 'helpers/config';
 
-const LazyHome = loadable(() => import('views/microscope'), {
-	resolveComponent: (components) => components.ConnectedMicroscope,
+const LazyHome = loadable(() => import('views/landing'), {
+	resolveComponent: (components) => components.ConnectedLanding,
 });
 const LazyTx = loadable(() => import('views/tx'), {
 	resolveComponent: (components) => components.ConnectedTx,

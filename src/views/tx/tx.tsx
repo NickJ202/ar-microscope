@@ -123,7 +123,6 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 	);
 }
 
-// TODO: update icon -> M
 export default function Tx(props: any) {
 	const [searchTerm, setSearchTerm] = React.useState<string>('');
 	const [loading, setLoading] = React.useState<boolean>(false);
@@ -201,30 +200,61 @@ export default function Tx(props: any) {
 		}
 	}
 
-	function getData() {
-		if (data && activeNode) {
-			return (
-				<>
-					<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
-					<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
-				</>
-			);
-		} else {
-			return (
-				<S.EmptyContainer>
-					<p>Search Tx ID</p>
-				</S.EmptyContainer>
-			);
-		}
-	}
+	// function getData() {
+	// 	if (data && activeNode) {
+	// 		return (
+	// 			<>
+	// 				<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
+	// 				<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
+	// 			</>
+	// 		);
+	// 	} else {
+	// 		return (
+	// 			<>
+	// 				<button onClick={() => props.goToTx('9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4')}>Go to tx</button>
+	// 				<S.EmptyContainer>
+	// 					<p>Search Tx ID</p>
+	// 				</S.EmptyContainer>
+	// 			</>
+	// 		);
+	// 	}
+	// }
+
+	console.log(props)
 
 	return (
 		<>
-			<button onClick={() => props.goToMicroscope()}>Back to microscope</button>
+			<S.HeaderWrapper>
+				<S.HeaderContainer>
+					<S.HeaderContent>
+						<S.LogoContainer>
+							<S.Logo src={ASSETS.logo} />
+						</S.LogoContainer>
+						<S.ActionContainer>
+							<Search
+								value={searchTerm}
+								handleChange={(id: string) => setSearchTerm(id)}
+								handleSearch={(e: React.KeyboardEvent<HTMLInputElement>) => handleSearch(e)}
+								handleClear={() => handleClear()}
+								disabled={loading}
+								loading={loading}
+							/>
+						</S.ActionContainer>
+					</S.HeaderContent>
+				</S.HeaderContainer>
+			</S.HeaderWrapper>
+			<S.Wrapper>
+				<S.Container>
+					<S.Content>
+						<S.TreeWrapper>{getTreeData()}</S.TreeWrapper>
+						<S.RendererWrapper>{getFrame()}</S.RendererWrapper>
+					</S.Content>
+				</S.Container>
+			</S.Wrapper>
 		</>
 	);
 }
 
 export const ConnectedTx = connect(null, (dispatch) => ({
-	goToMicroscope: () => dispatch({ type: 'HOME' }),
+	goToHome: () => dispatch({ type: 'HOME' }),
 }))(Tx);
