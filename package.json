@@ -14,7 +14,7 @@
 		"build": "webpack --mode production",
 		"fund": "bundlr fund 500000000000 -h https://node2.bundlr.network -w ${PATH_TO_WALLET} -c arweave",
 		"balance": "bundlr balance ${WALLET} -h https://node2.bundlr.network -c arweave",
-		"deploy": "npm run build && node perma-deploy.mjs ./v1"
+		"deploy": "npm run build && node perma-deploy.mjs ./dist"
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.12.1",
