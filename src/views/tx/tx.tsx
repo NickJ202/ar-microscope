@@ -109,13 +109,11 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 		cy.on('click', 'node', function (event) {
 			const target = event.target;
 			props.handleCallback(target['_private'].data);
-			console.log('!!!!!');
 		});
 
 		cy.on('tap', 'node', function (event) {
 			const target = event.target;
 			props.handleCallback(target['_private'].data);
-			console.log('!!!!!');
 		});
 
 		return () => {
