@@ -33,11 +33,3 @@ export default function App() {
 		</>
 	);
 }
-
-// const mapStateToProps = (state: any, props: any) => {
-// 	return {
-// 		...props,
-// 		page: state.page,
-// 	};
-// };
-// export const ConnectedApp = connect(mapStateToProps)(App);
