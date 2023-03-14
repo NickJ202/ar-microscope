@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import { fadeIn2, open } from 'helpers/animations';
+import { STYLING } from 'helpers/styling';
+
 export const Wrapper = styled.div`
     height: 100vh;
     width: 100%;
@@ -17,6 +20,10 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation: ${open} ${fadeIn2};
+    @media (max-width: ${STYLING.cutoffs.initial}) {
+		width: 90vw;
+	}
 `;
 
 export const LogoWrapper = styled.div`

@@ -102,7 +102,7 @@ export const GlobalStyle = createGlobalStyle`
 
     &:hover {
       text-decoration: underline;
-      text-decoration-thickness: 1.215px;
+      text-decoration-thickness: 1.5px !important;
     }
     &:focus {
       text-decoration: underline;

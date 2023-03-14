@@ -1,7 +1,8 @@
 import closeSVG from 'assets/close.svg';
 import dividerSVG from 'assets/divider.svg';
 import logoSVG from 'assets/logo.svg';
-import logoCopyPNG from 'assets/logo-copy.png'
+import logoCopyPNG from 'assets/logo-copy.png';
+import returnSVG from 'assets/return.svg';
 import searchSVG from 'assets/search.svg';
 
 export const ASSETS = {
@@ -9,6 +10,7 @@ export const ASSETS = {
 	divider: dividerSVG,
 	logo: logoSVG,
 	logoCopy: logoCopyPNG,
+	return: returnSVG,
 	search: searchSVG
 };
 

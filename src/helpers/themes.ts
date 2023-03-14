@@ -10,7 +10,7 @@ const DEFAULT = {
 	neutral7: '#959595',
 	neutral8: '#ACACAC',
 	neutral9: '#F6F8FA',
-	neutral10: '#BABABA',
+	neutral10: '#737373',
 	neutral11: '#202020',
 	neutral12: '#FAFAFA',
 	neutral13: '#F7F7F7',
@@ -198,7 +198,7 @@ export const defaultTheme: DefaultTheme = {
 		},
 		navigation: {
 			footer: {
-				background: DEFAULT.neutral1,
+				background: DEFAULT.neutral10,
 			},
 			header: {
 				background: DEFAULT.neutral11,

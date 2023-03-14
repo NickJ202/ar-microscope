@@ -61,7 +61,7 @@ export function elements(tx: string): Promise<{ id: string, parent: string }[]> 
       })
         .then(res => res.json())
         .then(compose(pluck('node'), path(['data', 'transactions', 'edges'])))
-        .then(x => (console.log('nodes', x.length), x))
+        .then(x => x)
         //.then(uniqBy(path(['owner', 'address'])))
         .then(nodes => {
           const ns = map(n => ({ data: { id: n.id, group: 'nodes' } }), nodes)
@@ -71,7 +71,7 @@ export function elements(tx: string): Promise<{ id: string, parent: string }[]> 
             concat(ns)
           )(edges)
         })
-        .then(x => (console.log('nodes', x.length), x))
+        .then(x => x)
     )
 
 }

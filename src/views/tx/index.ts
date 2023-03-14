@@ -1,1 +1,1 @@
-export { ConnectedTx, default as Tx } from './Tx';
+export { default as Tx } from './Tx';
