@@ -112,6 +112,7 @@ module.exports = {
 			components: path.resolve(__dirname, 'src/components/'),
 			helpers: path.resolve(__dirname, 'src/helpers/'),
 			lib: path.resolve(__dirname, 'src/lib/'),
+			routes: path.resolve(__dirname, 'src/routes/'),
 			views: path.resolve(__dirname, 'src/views/'),
 		},
 	},

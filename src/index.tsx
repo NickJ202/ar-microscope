@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
 import { configureStore } from 'store/configureStore';
-// import { HashRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { ConnectedApp } from 'app';
+import { App } from 'app';
 import { GlobalStyle } from 'app/styles';
 import { defaultTheme } from 'helpers/themes';
 
@@ -18,8 +18,10 @@ function render() {
 		<ThemeProvider theme={defaultTheme}>
 			<Provider store={store}>
 				<React.StrictMode>
-					<GlobalStyle />
-					<ConnectedApp />
+					<HashRouter>
+						<GlobalStyle />
+						<App />
+					</HashRouter>
 				</React.StrictMode>
 			</Provider>
 		</ThemeProvider>,

@@ -123,7 +123,6 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 	);
 }
 
-// TODO: update icon -> M
 export default function Microscope(props: any) {
 	const [searchTerm, setSearchTerm] = React.useState<string>('');
 	const [loading, setLoading] = React.useState<boolean>(false);
@@ -220,8 +219,6 @@ export default function Microscope(props: any) {
 			);
 		}
 	}
-
-	console.log(data);
 
 	return (
 		<>

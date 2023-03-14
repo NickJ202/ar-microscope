@@ -1,13 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 import cytoscape from 'cytoscape';
 import klay from 'cytoscape-klay';
 import { elements, getRendererURL } from 'lib/molecule';
 
+import { IconButton } from 'components/IconButton';
+import * as urls from 'helpers/urls';
+
 cytoscape.use(klay);
 
+import { Modal } from 'components/Modal';
 import { Search } from 'components/Search';
 import { ASSETS } from 'helpers/config';
+import * as windowUtils from 'helpers/window';
 
 import * as S from './styles';
 
@@ -71,22 +77,22 @@ const layouts: Record<string, any> = {
 function Tree(props: { data: any; handleCallback: (node: any) => void; activeId: string | null }) {
 	const styles: any = [
 		{
-			selector: 'node',
+			selector: 'node[label]',
 			style: {
 				label: 'data(label)',
-				'background-color': '#3A3A3A',
+				'background-color': '#D9D9D9',
 				'text-valign': 'center',
 				'text-halign': 'center',
-				width: '50px',
 				height: '50px',
-				'border-radius': '50%',
-				cursor: 'pointer !important',
+				'max-height': '50px',
+				width: '50px',
+				'max-width': '50px',
 			},
 		},
 		{
 			selector: `node[id="${props.activeId}"]`,
 			style: {
-				'background-color': '#ff8500',
+				'background-color': '#FF5F15',
 			},
 		},
 	];
@@ -103,6 +109,13 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 		cy.on('click', 'node', function (event) {
 			const target = event.target;
 			props.handleCallback(target['_private'].data);
+			console.log('!!!!!');
+		});
+
+		cy.on('tap', 'node', function (event) {
+			const target = event.target;
+			props.handleCallback(target['_private'].data);
+			console.log('!!!!!');
 		});
 
 		return () => {
@@ -112,21 +125,20 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 
 	return (
 		<S.TreeDiagram>
-			<div
-				ref={cyRef}
-				style={{
-					width: '35%',
-					height: '35%',
-				}}
-			/>
+			<S.SelectedContainer>
+				<p>Selected</p>
+			</S.SelectedContainer>
+			<S.CyWrapper ref={cyRef} />
 		</S.TreeDiagram>
 	);
 }
 
-// TODO: update icon -> M
-export default function Tx(props: any) {
-	const [searchTerm, setSearchTerm] = React.useState<string>('');
-	const [loading, setLoading] = React.useState<boolean>(false);
+export default function Tx() {
+	const { id } = useParams();
+
+	const [searchTerm, setSearchTerm] = React.useState<string>(id);
+	const [desktop, setDesktop] = React.useState(windowUtils.checkDesktop());
+	// const [loading, setLoading] = React.useState<boolean>(false);
 
 	const [searchRequested, setSearchRequested] = React.useState<boolean>(false);
 	const [searchToggle, setSearchToggle] = React.useState<boolean>(false);
@@ -135,13 +147,25 @@ export default function Tx(props: any) {
 	const [activeNode, setActiveNode] = React.useState<any>(null);
 	const [rendererURL, setRendererURL] = React.useState<any>(null);
 
+	const [showSearchModal, setShowSearchModal] = React.useState<boolean>(false);
+
+	function handleWindowResize() {
+		if (windowUtils.checkDesktop()) {
+			setDesktop(true);
+		} else {
+			setDesktop(false);
+		}
+	}
+
+	windowUtils.checkWindowResize(handleWindowResize);
+
 	React.useEffect(() => {
 		(async function () {
 			if (searchTerm || searchRequested) {
-				setLoading(true);
+				// setLoading(true);
 				const result = await elements(searchTerm);
 				setData(result);
-				setLoading(false);
+				// setLoading(false);
 			}
 		})();
 	}, [searchToggle]);
@@ -165,6 +189,9 @@ export default function Tx(props: any) {
 			if (searchTerm) {
 				setSearchRequested(true);
 				setSearchToggle(!searchToggle);
+				if (showSearchModal) {
+					setShowSearchModal(false);
+				}
 			}
 		}
 	}
@@ -189,7 +216,11 @@ export default function Tx(props: any) {
 				/>
 			);
 		} else {
-			return null;
+			return (
+				<S.EmptyContainer>
+					<p>Enter a TXID to focus on ...</p>
+				</S.EmptyContainer>
+			);
 		}
 	}
 
@@ -197,34 +228,89 @@ export default function Tx(props: any) {
 		if (activeNode) {
 			return <S.Frame src={rendererURL} />;
 		} else {
-			return null;
+			return (
+				<S.EmptyContainer>
+					<p>Waiting for selection ...</p>
+				</S.EmptyContainer>
+			);
 		}
 	}
 
-	function getData() {
-		if (data && activeNode) {
-			return (
-				<>
-					<S.ContentWrapper>{getTreeData()}</S.ContentWrapper>
-					<S.ContentWrapper>{getFrame()}</S.ContentWrapper>
-				</>
-			);
+	function getSearch() {
+		return (
+			<Search
+				value={searchTerm}
+				handleChange={(id: string) => setSearchTerm(id)}
+				handleSearch={(e: React.KeyboardEvent<HTMLInputElement>) => handleSearch(e)}
+				handleClear={() => handleClear()}
+				disabled={false}
+				loading={false}
+			/>
+		);
+	}
+
+	function getSearchContainer() {
+		if (desktop) {
+			return <S.ActionContainer>{getSearch()}</S.ActionContainer>;
 		} else {
 			return (
-				<S.EmptyContainer>
-					<p>Search Tx ID</p>
-				</S.EmptyContainer>
+				<>
+					{showSearchModal && (
+						<Modal header={null} handleClose={() => setShowSearchModal(false)}>
+							{getSearch()}
+						</Modal>
+					)}
+					<S.MobileActionContainer>
+						<IconButton type={'alt1'} src={ASSETS.search} handlePress={() => setShowSearchModal(true)} />
+					</S.MobileActionContainer>
+				</>
 			);
 		}
 	}
 
 	return (
 		<>
-			<button onClick={() => props.goToMicroscope()}>Back to microscope</button>
+			<S.HeaderWrapper>
+				<S.HeaderContainer>
+					<S.HeaderContent>
+						<S.LogoContainer>
+							<Link to={urls.base}>
+								<S.LogoContent>
+									<ReactSVG src={ASSETS.logo} />
+								</S.LogoContent>
+							</Link>
+						</S.LogoContainer>
+						{getSearchContainer()}
+					</S.HeaderContent>
+				</S.HeaderContainer>
+			</S.HeaderWrapper>
+			<S.Wrapper>
+				<S.Container>
+					<S.Content>
+						<S.TreeWrapper>{getTreeData()}</S.TreeWrapper>
+						<S.Divider>
+							<ReactSVG src={ASSETS.divider} />
+						</S.Divider>
+						<S.RendererWrapper>{getFrame()}</S.RendererWrapper>
+					</S.Content>
+				</S.Container>
+			</S.Wrapper>
+			<S.FooterWrapper>
+				<S.FooterContainer>
+					<S.FooterContent>
+						<S.ReturnContainer>
+							<Link to={urls.base}>
+								Back to Home
+								{/* <ReactSVG src={ASSETS.return} /> */}
+							</Link>
+						</S.ReturnContainer>
+					</S.FooterContent>
+				</S.FooterContainer>
+			</S.FooterWrapper>
 		</>
 	);
 }
 
-export const ConnectedTx = connect(null, (dispatch) => ({
-	goToMicroscope: () => dispatch({ type: 'HOME' }),
-}))(Tx);
+// export const ConnectedTx = connect(null, (dispatch) => ({
+// 	goToHome: () => dispatch({ type: 'HOME' }),
+// }))(Tx);
