@@ -1,27 +1,29 @@
-// import { connect } from 'react-redux';
-// import loadable from '@loadable/component';
+import { useEffect, useState } from 'react';
 
 import { DOM } from 'helpers/config';
 import { Routes } from 'routes';
+import { Tx } from 'views/tx';
 
-// const LazyHome = loadable(() => import('views/landing'), {
-// 	resolveComponent: (components) => components.ConnectedLanding,
-// });
-// const LazyTx = loadable(() => import('views/tx'), {
-// 	resolveComponent: (components) => components.ConnectedTx,
-// });
-
-// interface ObjectKeys {
-// 	[key: string]: any;
-// }
-
-// const components: ObjectKeys = {
-// 	LazyHome,
-// 	LazyTx,
-// };
-
+function parseQuery(queryString: string) {
+	const query: any = {};
+	const pairs: any = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+	for (let i = 0; i < pairs.length; i++) {
+		const pair: any = pairs[i].split('=');
+		query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+	}
+	return query;
+}
 export default function App() {
-	// const Component = components[props.page || 'LazyHome'];
+	const query = parseQuery(window.location.search);
+	const [renderTx, setRenderTx] = useState<string | undefined>();
+	useEffect(() => {
+		const tx = query.tx;
+		if (query.tx) {
+			setRenderTx(tx);
+		}
+	}, []);
+
+	if (renderTx) return <Tx tx={renderTx} />;
 	return (
 		<>
 			<div id={DOM.loader} />
