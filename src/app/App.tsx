@@ -1,27 +1,19 @@
-// import { connect } from 'react-redux';
-// import loadable from '@loadable/component';
+import { useEffect } from 'react';
 
 import { DOM } from 'helpers/config';
 import { Routes } from 'routes';
 
-// const LazyHome = loadable(() => import('views/landing'), {
-// 	resolveComponent: (components) => components.ConnectedLanding,
-// });
-// const LazyTx = loadable(() => import('views/tx'), {
-// 	resolveComponent: (components) => components.ConnectedTx,
-// });
-
-// interface ObjectKeys {
-// 	[key: string]: any;
-// }
-
-// const components: ObjectKeys = {
-// 	LazyHome,
-// 	LazyTx,
-// };
-
 export default function App() {
-	// const Component = components[props.page || 'LazyHome'];
+	useEffect(() => {
+		const params = new Proxy(new URLSearchParams(window.location.search), {
+			get: (searchParams, prop: string) => searchParams.get(prop),
+		});
+		const tx = (params as { tx?: string }).tx;
+		if (tx) {
+			window.location.href = `${window.location.origin}/#/tx/${tx}`;
+		}
+	}, []);
+
 	return (
 		<>
 			<div id={DOM.loader} />
