@@ -118,8 +118,7 @@ module.exports = {
 	},
 	output: {
 		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'v1'),
-		// path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'dist'),
 	},
 	devServer: {
 		allowedHosts: ['.gitpod.io'],
