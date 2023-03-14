@@ -121,6 +121,6 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 	},
 	devServer: {
-		allowedHosts: ['.gitpod.io']
-	}
+		allowedHosts: ['.gitpod.io'],
+	},
 };

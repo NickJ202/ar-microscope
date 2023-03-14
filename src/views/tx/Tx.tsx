@@ -131,10 +131,14 @@ function Tree(props: { data: any; handleCallback: (node: any) => void; activeId:
 	);
 }
 
-export default function Tx() {
+interface RendererProps {
+	tx?: string;
+}
+export default function Tx(props: RendererProps) {
 	const { id } = useParams();
+	const { tx } = props;
 
-	const [searchTerm, setSearchTerm] = React.useState<string>(id);
+	const [searchTerm, setSearchTerm] = React.useState<string>(id || tx);
 	const [desktop, setDesktop] = React.useState(windowUtils.checkDesktop());
 	// const [loading, setLoading] = React.useState<boolean>(false);
 
